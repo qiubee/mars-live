@@ -1,46 +1,103 @@
-# Web App From Scratch @cmda-minor-web 1819
+# Live on Mars
 
-In this course you will learn to build a web application without frameworks or unnecessary libraries, but with vanilla HTML, CSS & JavaScript as much as possible. The end result is a modular, single page web app (SPA). Data will be retrieved from an external API of your choice, manipulated and finally shown in the UI of the App. You will learn different ways to structure code and develope your own coding style. With the gained knowledge you will be able to build interactive prototypes, based on real data. Also you will gain a better understanding of the how API's, frameworks and libraries work.
+![Preview image of website showing weather forecast and images of Mars]()
 
-## Learning goals
+## Description
 
-* _You can add structure to your code by applying patterns. You can defend the choice for the chosen patterns_
-* _You can retrieve data, manipulate it and dynamically convert it to html elements using templating_
-* _You understand how you can work with an external API using asynchronous code_
-* _You understand how you can manage state in your application and you inform the user of state where necessary_
+Always wanted to know what it's like to be on Mars? With this app you can see the weather of the past 7 days, and have a look around the surface of Mars.
 
-[Rubric](https://docs.google.com/spreadsheets/d/e/2PACX-1vTjZGWGPC_RMvTMry8YW5XOM79GEIdgS7I5JlOe6OeeOUdmv7ok1s9jQhzojNE4AsyzgL-jJCbRj1LN/pubhtml?gid=0&single=true)
+## API
 
-## Program
+To create the app, the following API's have been used to collect the data:
 
-### Week 1 - Hello API 🐒
+* **InSight: Mars Weather Service API**
+* **Mars Rover Photos API**.
 
-Goal: Retrieve data from an API and render it in an overview page.
+These API's are listed at [NASA's API Portal](https://api.nasa.gov/)
 
-[Excercises](https://github.com/cmda-minor-web/web-app-from-scratch-1920/blob/master/course/week-1.md)
+### Insight: Mars Weather Service API
 
-[Slides](https://drive.google.com/open?id=1Rjl9xqXoKniQSRJPdkU1O5YwWC33SJK8KiV0a-H_xZU)
+The Insight API provides weather data from NASA's InSight Mars lander that continuously measures temperature, wind and pressure from the surface of Mars.
 
-### Week 2 - Design and Refactor 🛠
+#### Data
 
-Goal: Design the web app. Add routes and states. Rendering detail page.
+When calling the Insight API you receive the following data:
 
-[Excercises](https://github.com/cmda-minor-web/web-app-from-scratch-1920/blob/master/course/week-2.md)
+* 
+* 
 
-[Slides](https://drive.google.com/open?id=1IqQeu1m0dQiSC_KCvrn8eencAgtYe7X6qT-gm0n9Bmc)
+### Mars Rover Photos API
 
-### Week 3 - Wrapping up 🎁
+The Mars Rover Photos API provides access to a database of onphotos taken on Mars. The pictures taken on Mars have been shot by NASA's rovers. You're able to specify which of the three rovers you want pictures of. You're also able to select the camera that has been taking the pictures.
 
-Goal:
-Manipulate data. Split code into modules. Reflect on end result
+#### Data
 
-[Excercises](https://github.com/cmda-minor-web/web-app-from-scratch-1920/blob/master/course/week-3.md)
+When calling the Mars Rover Photos API you receive a list with the following data:
 
-[Slides](https://drive.google.com/open?id=1BSzGYNLMgtHD4HRnK7f0DgyTv4Pg3xsQwD_eYNo7v0Y)
+* Sol [(Mars solar day)](https://en.wikipedia.org/wiki/Sol_(day_on_Mars))
+* Image source
 
-<!-- Add a link to your live demo in Github Pages 🌐-->
+The amount of data you receive depends on the query you send to the API. The data will return as a JSON-object.
 
-<!-- ☝️ replace this description with a description of your own work -->
+This is an example of the data you receive:
+
+```json
+{
+    "photos": [
+        {
+            "camera": {
+                "full_name": "Mast Camera",
+                "id": 22,
+                "name": "MAST",
+                "rover_id": 5,
+            }
+            "earth_date": "2013-10-07",
+            "id": 4180,
+            "img_src": "http://mars.jpl.nasa.gov/msl-raw-images/msss/00416/mcam/0416ML0017120000201063I01_DXXX.jpg",
+            "rover": {
+                "cameras": [
+                    {
+                        "full_name": "Front Hazard Avoidance Camera",
+                        "name": "FHAZ"
+                    },
+                    {
+                        "full_name": "Navigation Camera",
+                        "name": "NAVCAM"
+                    },
+                    {
+                        "full_name": "Chemistry and Camera Complex",
+                        "name": "CHEMCAM"
+                    },
+                    {
+                        "full_name": "Mars Hand Lens Imager",
+                        "name": "MAHLI"
+                    },
+                    {   "full_name": "Mars Descent Imager",
+                        "name": "MARDI"
+                    },
+                    {
+                        "full_name": "Rear Hazard Avoidance Camera",
+                    "name": "RHAZ"
+                    }
+                ],
+                "id": 5,
+                "landing_date": "2012-08-06",
+                "launch_date": "2011-11-26",
+                "max_date": "2019-09-28",
+                "max_sol": 2540,
+                "name": "Curiosity",
+                "status": "active",
+                "total_photos": "366206"
+            },
+            "sol": 416
+        }
+    ]
+}
+```
+
+### API-key
+
+To collect data from NASA, you are required to have an API-key. The key allows you to make a call to their API's.
 
 <!-- replace the code in the /docs folder with your own, so you can showcase your work with GitHub Pages 🌍 -->
 
