@@ -37,7 +37,7 @@ const mars = {
 // -- Fetch data with Async/Await --
 // fetchMarsData();
 getMarsWeather();
-// getMarsPhotos();
+getMarsPhotos();
 
 async function fetchMarsData() {
     const marsWeather = getMarsWeather();
