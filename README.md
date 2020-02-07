@@ -21,10 +21,191 @@ The Insight API provides weather data from NASA's InSight Mars lander that conti
 
 #### Data
 
-When calling the Insight API you receive the following data:
+When calling the Insight API, you receive the following data:
 
-* 
-* 
+* Sol [(Mars solar day)](https://en.wikipedia.org/wiki/Sol_(day_on_Mars))
+* Air temperatures (°C)
+  * Minimum temp.
+  * Average temp.
+  * Maximum temp.
+* Wind speed (m/s)
+  * Minimum speed
+  * Average speed
+  * Maximum speed
+* Pressure (Pa)
+  * Minimum pressure
+  * Average pressure
+  * Maximum Pressure
+* Wind direction
+* The current weather season
+
+The amount of sol (days) will always be 7 (1 week), and in the data the sol number will correspond to the day of the week. The data will return as a JSON-object.
+
+This is an example of the JSON-object you receive from the **Insight API**:
+
+```json
+{
+    "419": {
+        "AT": {
+            "av": -61.24,
+            "ct": 343156,
+            "mn": -96.104,
+            "mx": -12.419
+        },
+        "HWS": {
+            "av": -5.091,
+            "ct": 137176,
+            "mn": 0.182,
+            "mx": 20.209
+        },
+        "PRE": {
+            "av": 628.617,
+            "ct": 172951,
+            "mn": 605.4989,
+            "mx": 642.7481
+        },
+        "WD": {
+            "0": {
+                    "compass_degrees": 0,
+                    "compass_point": "N",
+                    "compass_right": 0,
+                    "compass_up": 1,
+                    "ct": 2,
+            },
+            "1": {
+                    "compass_degrees": 22.5,
+                    "compass_point": "NNE",
+                    "compass_right": 0.382683432365,
+                    "compass_up": 0.923879532511,
+                    "ct": 136,
+            },
+            "2": {
+                    "compass_degrees": 45,
+                    "compass_point": "NE",
+                    "compass_right": 0.707106781187,
+                    "compass_up": 0.707106781187,
+                    "ct": 728,
+            },
+            "3": {
+                    "compass_degrees": 67.5,
+                    "compass_point": "ENE",
+                    "compass_right": 0.923879532511,
+                    "compass_up": 0.382683432365,
+                    "ct": 4506,
+            },
+            "5": {
+                    "compass_degrees": 112.5,
+                    "compass_point": "ESE",
+                    "compass_right": 0.923879532511,
+                    "compass_up": -0.382683432365,
+                    "ct": 7050,
+            },
+            "6": {
+                    "compass_degrees": 135,
+                    "compass_point": "SE",
+                    "compass_right": 0.707106781187,
+                    "compass_up": -0.707106781187,
+                    "ct": 21365,
+            },
+            "6": {
+                    "compass_degrees": 135,
+                    "compass_point": "SE",
+                    "compass_right": 0.707106781187,
+                    "compass_up": -0.707106781187,
+                    "ct": 21365,
+                },
+            "7": {
+                    "compass_degrees": 157.5,
+                    "compass_point": "SSE",
+                    "compass_right": 0.382683432365,
+                    "compass_up": -0.923879532511,
+                    "ct": 21165,
+                },
+            "8": {
+                    "compass_degrees": 180,
+                    "compass_point": "S",
+                    "compass_right": 0,
+                    "compass_up": -1,
+                    "ct": 13676,
+                },
+            "9": {
+                    "compass_degrees": 202.5,
+                    "compass_point": "SSW",
+                    "compass_right": -0.382683432365,
+                    "compass_up": -0.923879532511,
+                    "ct": 16011,
+                },
+            "10": {
+                    "compass_degrees": 225,
+                    "compass_point": "SW",
+                    "compass_right": -0.707106781187,
+                    "compass_up": -0.707106781187,
+                    "ct": 16110,
+                },
+            "11": {
+                    "compass_degrees": 247.5,
+                    "compass_point": "WSW",
+                    "compass_right": -0.923879532511,
+                    "compass_up": -0.382683432365,
+                    "ct": 4057,
+                },
+            "12": {
+                    "compass_degrees": 270,
+                    "compass_point": "W",
+                    "compass_right": -1,
+                    "compass_up": -0,
+                    "ct": 25338,
+                },
+            "13": {
+                    "compass_degrees": 292.5,
+                    "compass_point": "WNW",
+                    "compass_right": -0.923879532511,
+                    "compass_up": 0.382683432365,
+                    "ct": 6986,
+                },
+            "14": {
+                    "compass_degrees": 315,
+                    "compass_point": "NW",
+                    "compass_right": -0.707106781187,
+                    "compass_up": 0.707106781187,
+                    "ct": 42,
+                },
+            "15": {
+                    "compass_degrees": 337.5,
+                    "compass_point": "NNW",
+                    "compass_right": -0.382683432365,
+                    "compass_up": 0.923879532511,
+                    "ct": 4,
+                },
+            "most_common": {
+                    "compass_degrees": 270,
+                    "compass_point": "W",
+                    "compass_right": -1,
+                    "compass_up": -0,
+                    "ct": 25338
+                }
+    },
+    "420": {...},
+    "421": {...},
+    "422": {...},
+    "423": {...},
+    "424": {...},
+    "425": {...},
+    "sol_keys": ["419", "420", "421", "422", "423", "424", "425"],
+    "validity_checks": {
+        "418": {...},
+        "419": {...},
+        "420": {...},
+        "421": {...},
+        "422": {...},
+        "423": {...},
+        "424": {...},
+        "425": {...},
+        "sol_hours_checked": 18,
+        "sol_checked": ["418", "419", "420", "421", "422", "423", "424", "425"]
+    }
+}
+```
 
 ### Mars Rover Photos API
 
@@ -32,14 +213,14 @@ The Mars Rover Photos API provides access to a database of onphotos taken on Mar
 
 #### Data
 
-When calling the Mars Rover Photos API you receive a list with the following data:
+When calling the Mars Rover Photos API, you receive a list with the following data:
 
 * Sol [(Mars solar day)](https://en.wikipedia.org/wiki/Sol_(day_on_Mars))
 * Image source
 
 The amount of data you receive depends on the query you send to the API. The data will return as a JSON-object.
 
-This is an example of the data you receive:
+This is an example of the JSON-object you receive from the **Mars Rover Photos API**:
 
 ```json
 {
@@ -49,8 +230,8 @@ This is an example of the data you receive:
                 "full_name": "Mast Camera",
                 "id": 22,
                 "name": "MAST",
-                "rover_id": 5,
-            }
+                "rover_id": 5
+            },
             "earth_date": "2013-10-07",
             "id": 4180,
             "img_src": "http://mars.jpl.nasa.gov/msl-raw-images/msss/00416/mcam/0416ML0017120000201063I01_DXXX.jpg",
