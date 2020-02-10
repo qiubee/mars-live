@@ -1,49 +1,46 @@
-/*jshint esversion: 8 */
-
-// -- API variables --
+/*jshint esversion: 6 */
 const apiKey = "B0XkeeKZ8AD1ZEIYa7o26ya0bBDkvsXV3fn94GE2";
 
 const mars = {
+    weatherURL: `https://api.nasa.gov/insight_weather/?api_key=${apiKey}&feedtype=json&ver=1.0`,
+    photosURL: "https://api.nasa.gov/mars-photos/api/v1/rovers/" + this.rover + "/photos" + this.sol + this.camera + `&api_key=${apiKey}`,
     rover: "curiosity",
     camera: "&camera=mast",
     sol: "?sol=416",
     day: `?earth_date=${getDate()}`
 };
 
-const endpoints = {
-    weatherURL: `https://api.nasa.gov/insight_weather/?api_key=${apiKey}&feedtype=json&ver=1.0`,
-    photosURL: `https://api.nasa.gov/mars-photos/api/v1/rovers/${mars.rover}/photos${mars.sol}${mars.camera}&api_key=${apiKey}`,
-};
+// -- Fetch data --
+// fetch(`${mars.weatherUrl}?api_key=${apiKey}&feedtype=json&ver=1.0`)
+//     .then(function(res) {
+//         if (res.ok) {
+//             res.json()
+//             .then(function(res) {
+//                 return res;
+//             })
+//             .catch(function(err) {
+//                 console.error(err);
+//             });
+//         }
+        
+//     })
+//     .catch(function(err) {
+//         console.error(err);
+//     });
 
-// -- Render data in DOM --
-render();
+// -- Fetch data from multiple API's with Promise.all --
+Promise.all([
+    fetch(`${mars.weatherUrl}?api_key=${apiKey}&feedtype=json&ver=1.0`),
+    fetch(`${mars.photosUrl}${mars.rover}/photos${mars.sol}${mars.camera}&api_key=${apiKey}`)
+]).then(function (res) {
+    configureData(res);
+});
 
-async function render() {
-    const weatherData = await configureWeatherData();
-    // const marsPhotos = await configurePhotoData();
+function configureData(data) {
+    const weatherData = data[0];
+    const photosData = data[1];
 
-    if (weatherData !== undefined) {
-        document.querySelector("main > article > p").remove();
-    }
-    
-    // add weather data to individual weather cards
-    createWeatherCard(weatherData);
-}
-
-async function configureWeatherData() {
-    const rawWeatherData = await fetchData(endpoints.weatherURL);
-    if (rawWeatherData === undefined) {
-        return undefined;
-    }
-    console.log("Raw weather data:", rawWeatherData);
-    const cleanWeatherData = filterWeatherData(rawWeatherData);
-    console.log("Filtered weather data:", cleanWeatherData);
-    return cleanWeatherData;
-}
-
-async function configurePhotoData() {
-    const rawPhotoData = await fetchData(endpoints.photosURL);
-    console.log("Raw photo data:", rawPhotoData);
+    console.log(weatherData, photosData);
 }
 
 function createWeatherCard(weatherData) {
@@ -143,35 +140,16 @@ function getDate(fromCurrentDay = 0) {
     return year + "-" + month + "-" + day;
 }
 
-// Create element
+// create element
 function createElement(element) {
     return document.createElement(element);
 }
 
-// Create text
+// create text
 function addText(text) {
     return document.createTextNode(text);
 }
 
-// Request data
-async function fetchData(url) {
-    const data = await fetch(url);
-    if (checkStatus(data) === false) {
-        return undefined;
-    }
-    return await data.json();
-}
-
-// Convert windspeed to Beaufort scale
 function convertToBeaufort(windspeed) {
 
-}
-
-// Check ok status of fetch response
-function checkStatus(res) {
-    if (res.ok) {
-        return true;
-    } else {
-        return false;
-    }
 }
