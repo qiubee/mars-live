@@ -1,4 +1,6 @@
 /*jshint esversion: 8 */
+
+// -- API variables --
 const apiKey = "B0XkeeKZ8AD1ZEIYa7o26ya0bBDkvsXV3fn94GE2";
 
 const mars = {
@@ -13,19 +15,26 @@ const endpoints = {
     photosURL: `https://api.nasa.gov/mars-photos/api/v1/rovers/${mars.rover}/photos${mars.sol}${mars.camera}&api_key=${apiKey}`,
 };
 
-// -- Fetch data with Async/Await --
+// -- Render data in DOM --
 render();
 
 async function render() {
     // const weatherData = await configureWeatherData();
-    const marsPhotos = await configurePhotoData();
+    // const marsPhotos = await configurePhotoData();
 
+    if (weatherData !== undefined) {
+        document.querySelector("main > article > p").remove();
+    }
+    
     // add weather data to individual weather cards
     // createWeatherCard(weatherData);
 }
 
 async function configureWeatherData() {
     const rawWeatherData = await fetchData(endpoints.weatherURL);
+    if (rawWeatherData === undefined) {
+        return undefined;
+    }
     console.log("Raw weather data:", rawWeatherData);
     const cleanWeatherData = filterWeatherData(rawWeatherData);
     console.log("Filtered weather data:", cleanWeatherData);
@@ -146,10 +155,23 @@ function addText(text) {
 
 // Request data
 async function fetchData(url) {
-    return await (await fetch(url)).json();
+    const data = await fetch(url);
+    if (checkStatus(data) === false) {
+        return undefined;
+    }
+    return await data.json();
 }
 
 // Convert windspeed to Beaufort scale
 function convertToBeaufort(windspeed) {
 
+}
+
+// Check ok status of fetch response
+function checkStatus(res) {
+    if (res.ok) {
+        return true;
+    } else {
+        return false;
+    }
 }
