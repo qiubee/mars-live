@@ -2,61 +2,61 @@
 const apiKey = "B0XkeeKZ8AD1ZEIYa7o26ya0bBDkvsXV3fn94GE2";
 
 const mars = {
-    weatherUrl: "https://api.nasa.gov/insight_weather/",
-    photosUrl: "https://api.nasa.gov/mars-photos/api/v1/rovers/",
     rover: "curiosity",
     camera: "&camera=mast",
     sol: "?sol=416",
     day: `?earth_date=${getDate()}`
 };
 
-// -- Fetch data --
-// fetch(`${mars.weatherUrl}?api_key=${apiKey}&feedtype=json&ver=1.0`)
-//     .then(function(res) {
-//         if (res.ok) {
-//             res.json()
-//             .then(function(res) {
-//                 return res;
-//             })
-//             .catch(function(err) {
-//                 console.error(err);
-//             });
-//         }
-        
-//     })
-//     .catch(function(err) {
-//         console.error(err);
-//     });
-
-// -- Fetch data from multiple API's with Promise.all --
-// Promise.all([
-//     fetch(`${mars.weatherUrl}?api_key=${apiKey}&feedtype=json&ver=1.0`),
-//     fetch(`${mars.photosUrl}${mars.rover}/photos${mars.sol}${mars.camera}&api_key=${apiKey}`)
-// ]);
+const endpoints = {
+    weatherURL: `https://api.nasa.gov/insight_weather/?api_key=${apiKey}&feedtype=json&ver=1.0`,
+    photosURL: `https://api.nasa.gov/mars-photos/api/v1/rovers/${mars.rover}/photos${mars.sol}${mars.camera}&api_key=${apiKey}`,
+};
 
 // -- Fetch data with Async/Await --
-// fetchMarsData();
-getMarsWeather();
-getMarsPhotos();
+render();
 
-async function fetchMarsData() {
-    const marsWeather = getMarsWeather();
-    const marsPhotos = getMarsPhotos();
+async function render() {
+    // const weatherData = await configureWeatherData();
+    const marsPhotos = await configurePhotoData();
+
+    // add weather data to individual weather cards
+    // createWeatherCard(weatherData);
 }
 
-async function getMarsWeather() {
-    const marsWeather = await (await fetch(`${mars.weatherUrl}?api_key=${apiKey}&feedtype=json&ver=1.0`)).json();
-    console.log("Raw weather data:", marsWeather);
+async function configureWeatherData() {
+    const rawWeatherData = await fetchData(endpoints.weatherURL);
+    console.log("Raw weather data:", rawWeatherData);
+    const cleanWeatherData = filterWeatherData(rawWeatherData);
+    console.log("Filtered weather data:", cleanWeatherData);
+    return cleanWeatherData;
+}
 
-    days = filterWeatherData(marsWeather);
-    console.log("Filtered weather data:", days);
-   
-    // add 
-    days.map(function (item) {
-        const listItem = document.createElement("li");
+async function configurePhotoData() {
+    const rawPhotoData = await fetchData(endpoints.photosURL);
+    console.log("Raw photo data:", rawPhotoData);
+}
 
+function createWeatherCard(weatherData) {
+    const article = document.querySelector("main > article");
+    weatherData.map(function (item) {
+        
+        // create section & append to article
+        const section = article.appendChild(createElement("section"));
+
+        // add dayname as title to section
+        section.appendChild(createElement("h3")).appendChild(addText(`${item.day} (${item.sol} Sol)`));
+
+        // add list with weather data
+        const ul = section.appendChild(createElement("ul"));
+        
+        // temperature
+        ul.appendChild(createElement("li")).appendChild(addText(item.temp.average + "\xB0C"));
+        // wind speed
+        ul.appendChild(createElement("li")).appendChild(addText(item.wind.speed));
+        // wind direction
+        ul.appendChild(createElement("li")).appendChild(addText(item.wind.direction));
     });
-    
 }
 
 function filterWeatherData(data) {
@@ -71,16 +71,28 @@ function filterWeatherData(data) {
                 const obj = data[key];
 
                 // create temperatures
-                const minTemp = Math.round(obj.AT.mn) + "\xB0";
-                const maxTemp = Math.round(obj.AT.mx) + "\xB0";
-                const averageTemp = Math.round(obj.AT.av) + "\xB0";
+                const minTemp = Math.round(obj.AT.mn);
+                const maxTemp = Math.round(obj.AT.mx);
+                const averageTemp = Math.round(obj.AT.av);
 
                 // set wind data
-                const windSpeed = Math.round(obj.HWS.av);
+                const windSpeed = Number(Number(obj.HWS.av).toFixed(1));
                 const windDirection = obj.WD.most_common.compass_point.replace(/S/g, "Z").replace(/E/g, "O");
 
-                // get name of day and season
-                const day = new Intl.DateTimeFormat('nl-NL', {weekday: "long"}).format(new Date(obj.Last_UTC).getDay()+1);
+                // get date & year
+                const date = obj.First_UTC.replace(/\T(.*)/, "");
+                const year = Number(obj.First_UTC.substring(0, 4));
+
+                // get name of day & month in Dutch
+                // const day = new Intl.DateTimeFormat('nl-NL', {weekday: "long"}).format(new Date(obj.First_UTC));
+                // const month = new Intl.DateTimeFormat('nl-NL', {month: "long"}).format(new Date(obj.First_UTC));
+
+                // get name of day & month in English
+                const day = new Intl.DateTimeFormat('en-GB', {weekday: "long"}).format(new Date(obj.First_UTC));
+                const month = new Intl.DateTimeFormat('en-GB', {month: "long"}).format(new Date(obj.First_UTC));
+
+                // get sol day
+                const sol = Number(key);
 
                 // translate name of season to Dutch
                 let season;
@@ -98,20 +110,19 @@ function filterWeatherData(data) {
  
                 // add relevant data to empty array
                 days.push(
-                    {   day: day,
+                    {   date: date,
+                        year: year,
+                        month: month,
+                        day: day,
                         temp: {min: minTemp, max: maxTemp, average: averageTemp}, 
                         wind: {speed: windSpeed, direction: windDirection},
-                        season: season
+                        season: season,
+                        sol: sol
                     });
                 }
         });
     });
     return days;
-}
-
-async function getMarsPhotos() {
-    const marsPhotos = await (await fetch(`${mars.photosUrl}${mars.rover}/photos${mars.sol}${mars.camera}&api_key=${apiKey}`)).json();
-    console.log(marsPhotos);
 }
 
 // Give date from current day (0 = today)
@@ -121,4 +132,24 @@ function getDate(fromCurrentDay = 0) {
     const month = date.getMonth() + 1;
     const year = date.getFullYear();
     return year + "-" + month + "-" + day;
+}
+
+// Create element
+function createElement(element) {
+    return document.createElement(element);
+}
+
+// Create text
+function addText(text) {
+    return document.createTextNode(text);
+}
+
+// Request data
+async function fetchData(url) {
+    return await (await fetch(url)).json();
+}
+
+// Convert windspeed to Beaufort scale
+function convertToBeaufort(windspeed) {
+
 }
