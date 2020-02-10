@@ -19,7 +19,7 @@ const endpoints = {
 render();
 
 async function render() {
-    // const weatherData = await configureWeatherData();
+    const weatherData = await configureWeatherData();
     // const marsPhotos = await configurePhotoData();
 
     if (weatherData !== undefined) {
@@ -27,7 +27,7 @@ async function render() {
     }
     
     // add weather data to individual weather cards
-    // createWeatherCard(weatherData);
+    createWeatherCard(weatherData);
 }
 
 async function configureWeatherData() {
