@@ -12,7 +12,7 @@ Always wanted to know what it's like to be on Mars? With this app you can see th
   * [Actor Diagram](#Actor-Diagram)
   * [Interaction Diagram](#Interaction-Diagram)
 * [API](#API)
-  * [Insight: Mars Weather Service API](#Insight:-Mars-Weather-Service-API)
+  * [Insight: Mars Weather Service API](#Insight-Mars-Weather-Service-API)
   * [Mars Rover Photos API](#Mars-Rover-Photos-API)
   * [API key](#API-key)
 
