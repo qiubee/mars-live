@@ -20,14 +20,15 @@ render();
 
 async function render() {
     const weatherData = await configureWeatherData();
-    // const marsPhotos = await configurePhotoData();
-
     if (weatherData !== undefined) {
         document.querySelector("main > article > p").remove();
     }
+    const marsPhotos = await configurePhotoData();
     
-    // add weather data to individual weather cards
-    createWeatherCard(weatherData);
+    // add weather data to create individual weather cards
+    // createWeatherCard(weatherData);
+    // add photo data to create image composition
+    createImageComposition(marsPhotos, weatherData);
 }
 
 async function configureWeatherData() {
@@ -66,6 +67,10 @@ function createWeatherCard(weatherData) {
         // wind direction
         ul.appendChild(createElement("li")).appendChild(addText(item.wind.direction));
     });
+}
+
+function createImageComposition(photoData, weatherData) {
+    getClosestSolDay(weatherData);
 }
 
 function filterWeatherData(data) {
@@ -155,11 +160,12 @@ function addText(text) {
 
 // Request data
 async function fetchData(url) {
-    const data = await fetch(url);
-    if (checkStatus(data) === false) {
+    const res = await fetch(url);
+    if (!res.ok) {
+        console.error("Response was not ok");
         return undefined;
     }
-    return await data.json();
+    return await res.json();
 }
 
 // Convert windspeed to Beaufort scale
@@ -167,11 +173,11 @@ function convertToBeaufort(windspeed) {
 
 }
 
-// Check ok status of fetch response
-function checkStatus(res) {
-    if (res.ok) {
-        return true;
-    } else {
-        return false;
-    }
+// Get closest available sol day
+function getClosestSolDay (weatherData) {
+    weatherData.map(function (item, i) {
+        if (i === 0) {
+            console.log(item);
+        }
+    });
 }
