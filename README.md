@@ -8,13 +8,13 @@ Always wanted to know what it's like to be on Mars? With this app you can see th
 
 ## Table of contents
 
-1. [App structure & order](#app-structure-&-order)
-   1. [Actor Diagram](#Actor-Diagram)
-   2. [Interaction Diagram](#Interaction-Diagram)
-1. [API](#API)
-   1. [Insight: Mars Weather Service API](#Insight:-Mars-Weather-Service-API)
-   2. [Mars Rover Photos API](#Mars-Rover-Photos-API)
-   3. [API key](#API-key)
+* [App structure & order](#app-structure-&-order)
+  * [Actor Diagram](#Actor-Diagram)
+  * [Interaction Diagram](#Interaction-Diagram)
+* [API](#API)
+  * [Insight: Mars Weather Service API](#Insight:-Mars-Weather-Service-API)
+  * [Mars Rover Photos API](#Mars-Rover-Photos-API)
+  * [API key](#API-key)
 
 ## App structure & order
 
