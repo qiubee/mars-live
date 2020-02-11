@@ -286,17 +286,23 @@ To collect data from NASA, you are required to have an API-key. The key allows y
 
 To see what modules have to be used in the app, I've made an actor diagram. An *actor diagram* shows what functions are called from the modules. This way the structure of the app becomes visible.
 
-![The structure diagram of the Mars App](img/Actor Diagram (2).jpg)
+![The structure diagram of the Mars App](img/Actor%20Diagram%20(2).jpg)
 
 ### Interaction Diagram
 
 To see what modules are called when, I've made an interaction diagram. An *interaction diagram* shows what functions from a module are called when. This way the order of the functions that are being called becomes visible.
 
-![The order of modules and functions from the overview page of the Mars App showed in a interaction diagram](img/Interaction Diagram (3.1).jpg)
+#### Initial page
 
-![The order of modules and functions from the detailed weather page of the Mars App showed in a interaction diagram](img/Interaction Diagram (3.2).jpg)
+![The order of modules and functions from the overview page of the Mars App showed in a interaction diagram](img/Interaction%20Diagram%20(3.1).jpg)
 
-![The order of modules and functions from when the date gets filtered on the main page of the Mars App showed in a interaction diagram](img/Interaction Diagram (3.3).jpg)
+#### Detailed weather information
+
+![The order of modules and functions from the detailed weather page of the Mars App showed in a interaction diagram](/img/Interaction%20Diagram%20(3.2).jpg)
+
+#### Filter weather information on date
+
+![The order of modules and functions from when the date gets filtered on the main page of the Mars App showed in a interaction diagram](/img/Interaction%20Diagram%20(3.3).jpg)
 
 <!-- Add a nice poster image here at the end of the week, showing off your shiny frontend 📸 -->
 
