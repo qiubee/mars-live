@@ -1,5 +1,5 @@
-import { getDate } from "./utils/getDate.js";
-const api = (function () {
+import getDate from "../utils/getDate.js";
+export const api = (function () {
     const apiKey = "B0XkeeKZ8AD1ZEIYa7o26ya0bBDkvsXV3fn94GE2";
 
     const mars = {
@@ -28,4 +28,3 @@ const api = (function () {
         getMarsPhotos: fetchData(endpoints.marsPhotosURL)
     };
 })();
-export {api};

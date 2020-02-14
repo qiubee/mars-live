@@ -1,15 +1,11 @@
-/*jshint esversion: 8 */
-
-// --> import api.js module
-const data = (function () {
+export const data = (function () {
     // Request data
-    async function cleanWeatherData() {
-        const rawWeatherData = await api.getMarsWeatherData;
-        if (rawWeatherData === undefined) {
+    function cleanWeatherData(weatherData) {
+        if (weatherData === undefined) {
             return undefined;
         }
-        console.log("Raw weather data:", rawWeatherData);
-        const cleanWeatherData = filterWeatherData(rawWeatherData);
+        console.log("Raw weather data:", weatherData);
+        const cleanWeatherData = filterWeatherData(weatherData);
         console.log("Filtered weather data:", cleanWeatherData);
         return cleanWeatherData;
     }
