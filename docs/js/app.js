@@ -1,9 +1,6 @@
-import api from "./modules/api.js";
-// import data from "./modules/data.js";
-// import router from "./modules/router.js";
-// import render from "./modules/render.js";
+import { overview } from "./modules/router.js";
 
 init();
 function init() {
-    
+    overview();
 }
