@@ -1,5 +1,6 @@
 import { photoData, weatherData } from "./data.js";
-import { createWeatherCard } from "./render.js";
+import { createWeatherCard, createPhotoCollection } from "./render.js";
+import { loading } from "./UI.js";
 
 export function route() {
     overview();
@@ -14,12 +15,11 @@ export function route() {
 }
 
 async function overview() {
+    loading(true);
     const marsPhotos = await photoData(),
     marsWeather = await weatherData();
-    if (marsPhotos === undefined || marsWeather === undefined) {
-        console.log("render no data");
-    }
     createWeatherCard(marsWeather);
+    createPhotoCollection();
 }
 
 function detailWeatherInformation() {
