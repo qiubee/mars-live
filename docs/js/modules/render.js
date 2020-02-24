@@ -1,14 +1,16 @@
-import { addElementWithText } from "../utils/createElement.js";
+import { addElementWithText } from "../utils/addAndDeleteElement.js";
+import { loading } from "./UI.js";
 
 export function createWeatherCard(weatherData) {
     const article = document.querySelector("main > article");
 
     // error text when weather data is unavailable
     if (weatherData === undefined) {
+        loading(false);
         addElementWithText(article, "p", "We aren't able to show weather information at the moment. Refresh the page to try again.");
         return;
     }
-
+    loading(false);
     weatherData.map(function (item) {
         // create section & append to article
         const section = addElementWithText(article, "section");
@@ -33,7 +35,9 @@ export function createPhotoCollection(photoData) {
     
     // error text when photo data is unavailable
     if (photoData === undefined) {
+        loading(false);
         addElementWithText(section, "p", "We aren't able to show photos of Mars at the moment. Refresh the page to try again.");
         return;
     }
+    loading(false);
 }
