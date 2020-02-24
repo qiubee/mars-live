@@ -15,14 +15,13 @@ const apiKey = "B0XkeeKZ8AD1ZEIYa7o26ya0bBDkvsXV3fn94GE2";
 
 async function fetchData(url) {
     const res = await fetch(url);
-    if (!res.ok) {
-        console.error("Response was not ok", res.text);
+    if (res.ok) {
+        return await res.json();
+    } else {
+        console.error(res.statusText);
         return undefined;
     }
-    return await res.json();
 }
 
-export const api = { 
-    getMarsWeatherData: fetchData(endpoints.marsWeatherURL),
-    getMarsPhotos: fetchData(endpoints.marsPhotosURL),
-};
+export function getMarsWeatherData() {return fetchData(endpoints.marsWeatherURL);}
+export function getMarsPhotoData() {return fetchData(endpoints.marsPhotosURL);}
