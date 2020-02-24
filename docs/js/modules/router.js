@@ -1,15 +1,25 @@
-import { api } from "./api.js";
-import { data } from "./data.js";
-import { render } from "./render.js";
-export async function overview() {
-    const rawMarsPhotos = await api.getMarsPhotos,
-    rawMarsWeatherData = await api.getMarsWeatherData;
-    if (rawMarsPhotos === undefined || rawMarsWeatherData === undefined) {
+import { photoData, weatherData } from "./data.js";
+import { createWeatherCard } from "./render.js";
+
+export function route() {
+    overview();
+    routie({
+        "detail": function(day) {
+
+        },
+        "date": function(date) {
+
+        }
+    });
+}
+
+async function overview() {
+    const marsPhotos = await photoData(),
+    marsWeather = await weatherData();
+    if (marsPhotos === undefined || marsWeather === undefined) {
         console.log("render no data");
-        render.noData;
     }
-    const filteredWeatherData = data.cleanWeatherData(rawMarsWeatherData);
-    render.overview(filteredWeatherData);
+    createWeatherCard(marsWeather);
 }
 
 function detailWeatherInformation() {
