@@ -6,6 +6,10 @@ export function addElementWithText(element, newElement, text) {
     }
 }
 
+export function deleteElement(parent, child) {
+    parent.removeChild(child);
+}
+
 function createElement(element) {
     return document.createElement(element);
 }
