@@ -1,11 +1,9 @@
-export function createWeatherCard(weatherData) {
-    const main = document.querySelector("main");
-    
-    // create article & append to main
-    const article = main.appendChild(createElement("article"));
-    addElementWithText(article, "h2", "Weather on Mars last week");
+import { addElementWithText } from "../utils/createElement.js";
 
-    // error state
+export function createWeatherCard(weatherData) {
+    const article = document.querySelector("main > article");
+
+    // error text when weather data is unavailable
     if (weatherData === undefined) {
         addElementWithText(article, "p", "We aren't able to show weather information at the moment. Refresh the page to try again.");
         return;
@@ -13,13 +11,13 @@ export function createWeatherCard(weatherData) {
 
     weatherData.map(function (item) {
         // create section & append to article
-        const section = article.appendChild(createElement("section"));
+        const section = addElementWithText(article, "section");
 
         // add dayname as title to section
         addElementWithText(section, "h3", `${item.day} (${item.sol} Sol)`);
 
         // add list with weather data
-        const ul = section.appendChild(createElement("ul"));
+        const ul = addElementWithText(section, "ul");
 
         // temperature
         addElementWithText(ul, "li", item.temp.average + "\xB0C");
@@ -30,14 +28,12 @@ export function createWeatherCard(weatherData) {
     });
 }
 
-function createElement(element) {
-    return document.createElement(element);
-}
-
-function addText(text) {
-    return document.createTextNode(text);
-}
-
-function addElementWithText(element, newElement, text) {
-    return element.appendChild(createElement(newElement)).appendChild(addText(text));
+export function createPhotoCollection(photoData) {
+    const section = document.querySelector("main");
+    
+    // error text when photo data is unavailable
+    if (photoData === undefined) {
+        addElementWithText(section, "p", "We aren't able to show photos of Mars at the moment. Refresh the page to try again.");
+        return;
+    }
 }
