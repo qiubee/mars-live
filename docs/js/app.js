@@ -1,6 +1,2 @@
-import { overview } from "./modules/router.js";
-
-init();
-function init() {
-    overview();
-}
+import { route }from "./modules/router.js";
+route();
