@@ -1,11 +1,25 @@
-function cleanWeatherData(weatherData) {
-    if (weatherData === undefined) {
+import { getMarsPhotoData, getMarsWeatherData } from "./api.js";
+
+async function cleanWeatherData() {
+    const rawWeatherData = await getMarsWeatherData();
+    if (rawWeatherData === undefined) {
         return;
     }
-    console.log("Raw weather data:", weatherData);
-    const cleanWeatherData = filterWeatherData(weatherData);
+    console.log("Raw weather data:", rawWeatherData);
+    const cleanWeatherData = filterWeatherData(rawWeatherData);
     console.log("Filtered weather data:", cleanWeatherData);
     return cleanWeatherData;
+}
+
+async function cleanPhotoData() {
+    const rawPhotoData = await getMarsPhotoData();
+    if (rawPhotoData === undefined) {
+        return;
+    }
+    console.log("Raw photo data:", rawPhotoData);
+    // const cleanPhotoData = filterPhotoData(rawPhotoData);
+    // console.log("Filtered photo data:", cleanPhotoData);
+    // return cleanPhotoData;
 }
 
 function filterWeatherData(data, language = "en") {
@@ -21,13 +35,13 @@ function filterWeatherData(data, language = "en") {
                 const obj = data[key];
 
                 // create temperatures
-                const minTemp = Math.round(obj.AT.mn);
-                const maxTemp = Math.round(obj.AT.mx);
-                const averageTemp = Math.round(obj.AT.av);
+                const minTemp = obj.AT === undefined ? "unknown" : Math.round(obj.AT.mn);
+                const maxTemp = obj.AT === undefined ? "unknown" : Math.round(obj.AT.mx);
+                const averageTemp = obj.AT === undefined ? "unknown" : Math.round(obj.AT.av);
 
                 // set wind speed
-                const windSpeed = Number(Number(obj.HWS.av).toFixed(1));
-                let windDirection = obj.WD.most_common.compass_point;
+                const windSpeed = obj.HWS === undefined ? "unknown" : Number(Number(obj.HWS.av).toFixed(1));
+                let windDirection = obj.HWS === undefined ? "unknown" : obj.WD.most_common.compass_point;
 
                 // get date & year
                 const date = obj.First_UTC.replace(/\T(.*)/, "");
@@ -78,19 +92,14 @@ function filterWeatherData(data, language = "en") {
 }
 
 function translateSeasonNameToDutch(season) {
-    let dutchSeasonName;
     switch (season) {
         case "summer":
-            dutchSeasonName = "zomer";
-            break;
+            return "zomer";
         case "spring":
-            dutchSeasonName = "lente";
-            break;
+            return "lente";
         case "autumn":
-            dutchSeasonName = "herfst";
-            break;
+            return "herfst";
     }
-    return dutchSeasonName;
 }
 
 function getFullNameOf(date, day = true, month = false, language = "en-GB") {
@@ -108,14 +117,5 @@ function getFullNameOf(date, day = true, month = false, language = "en-GB") {
     return new Intl.DateTimeFormat(language, options).format(new Date(date));
 }
 
-export const data = {
-    cleanWeatherData: function (weatherData) {
-        if (weatherData === undefined) {
-            return;
-        }
-        console.log("Raw weather data:", weatherData);
-        const cleanWeatherData = filterWeatherData(weatherData);
-        console.log("Filtered weather data:", cleanWeatherData);
-        return cleanWeatherData;
-    }
-};
+export async function weatherData() {return await cleanWeatherData(getMarsWeatherData());}
+export async function photoData() {return await cleanPhotoData(getMarsPhotoData());}
