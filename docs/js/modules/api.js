@@ -23,5 +23,5 @@ async function fetchData(url) {
     }
 }
 
-export function getMarsWeatherData() {return fetchData(endpoints.marsWeatherURL);}
-export function getMarsPhotoData() {return fetchData(endpoints.marsPhotosURL);}
+export function getMarsWeatherData() { return fetchData(endpoints.marsWeatherURL); }
+export function getMarsPhotoData() { return fetchData(endpoints.marsPhotosURL); }
