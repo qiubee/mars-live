@@ -10,6 +10,9 @@ export function route() {
         },
         "date": function(date) {
 
+        },
+        "nl": function(language) {
+
         }
     });
 }
