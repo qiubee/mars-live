@@ -127,12 +127,13 @@ function getFullNameOf(date, day = true, month = false, language = "en-GB") {
 }
 
 export async function weatherData() {
-    if (checkInSessionStorage("weatherdata") === false) {
+    const key = "weatherdata";
+    if (checkInSessionStorage(key) === false) {
     const weatherData = await cleanWeatherData();
-    addToSessionStorage("weatherdata", weatherData);
+    addToSessionStorage(key, weatherData);
     return weatherData;
-    } else if ((checkInSessionStorage("weatherdata") === true)) {
-        return getFromSessionStorage("weatherdata");
+    } else if ((checkInSessionStorage(key) === true)) {
+        return getFromSessionStorage(key);
     }
 }
 export async function photoData() {return await cleanPhotoData();}
