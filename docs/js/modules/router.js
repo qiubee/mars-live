@@ -5,13 +5,19 @@ import { loading } from "./UI.js";
 export function route() {
     overview();
     routie({
-        "detail": function(day) {
+        ":day": async function(day) {
+            loading(true, document.querySelector("main > article"));
+            if (/^(^mon|tues|wednes|thurs|fri|satur|sun)day$/gim.test(day)) {
+                const marsWeather = await weatherData();
+            } else { 
+                loading(false, document.querySelector("main > article")); 
+            }
+            
+        },
+        "filter/:date": function(date) {
 
         },
-        "date": function(date) {
-
-        },
-        "nl": function(language) {
+        "nl": function() {
 
         }
     });
@@ -23,13 +29,5 @@ async function overview() {
     const marsPhotos = await photoData(),
     marsWeather = await weatherData();
     createWeatherCard(marsWeather);
-    createPhotoCollection();
-}
-
-function detailWeatherInformation() {
-
-}
-
-function filterWeatherDate() {
-
+    createPhotoCollection(marsPhotos);
 }
