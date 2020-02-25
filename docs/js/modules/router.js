@@ -15,7 +15,8 @@ export function route() {
 }
 
 async function overview() {
-    loading(true);
+    loading(true, document.querySelector("main > article"));
+    loading(true, document.querySelector("main > section"));
     const marsPhotos = await photoData(),
     marsWeather = await weatherData();
     createWeatherCard(marsWeather);
