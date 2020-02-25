@@ -7,7 +7,8 @@ export function addElementWithText(element, newElement, text) {
 }
 
 export function deleteElement(parent, child) {
-    parent.removeChild(child);
+    const element = document.querySelector(parent.tagName.toLowerCase() + " " + child);
+    return parent.removeChild(element);
 }
 
 function createElement(element) {
