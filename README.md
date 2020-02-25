@@ -6,6 +6,40 @@
 
 Always wanted to know what it's like to be on Mars? With this app you can see the weather of the past 7 days, and have a look around the surface of Mars.
 
+## Table of contents
+
+* [App structure & order](#app-structure-&-order)
+  * [Actor Diagram](#Actor-Diagram)
+  * [Interaction Diagram](#Interaction-Diagram)
+* [API](#API)
+  * [Insight: Mars Weather Service API](#Insight-Mars-Weather-Service-API)
+  * [Mars Rover Photos API](#Mars-Rover-Photos-API)
+  * [API key](#API-key)
+
+## App structure & order
+
+### Actor Diagram
+
+To see what modules have to be used in the app, I've made an actor diagram. An *actor diagram* shows what functions are called from the modules. This way the structure of the app becomes visible.
+
+![The structure diagram of the Mars App](img/Actor%20Diagram%20(2).jpg)
+
+### Interaction Diagram
+
+To see what modules are called when, I've made an interaction diagram. An *interaction diagram* shows what functions from a module are called when. This way the order of the functions that are being called becomes visible.
+
+#### Initial page
+
+![The order of modules and functions from the overview page of the Mars App showed in a interaction diagram](img/Interaction%20Diagram%20(3.1).jpg)
+
+#### Detailed weather information
+
+![The order of modules and functions from the detailed weather page of the Mars App showed in a interaction diagram](/img/Interaction%20Diagram%20(3.2).jpg)
+
+#### Filter weather information on date
+
+![The order of modules and functions from when the date gets filtered on the main page of the Mars App showed in a interaction diagram](/img/Interaction%20Diagram%20(3.3).jpg)
+
 ## API
 
 To create the app, the following API's have been used to collect the data:
@@ -280,8 +314,6 @@ This is an example of the JSON-object you receive from the **Mars Rover Photos A
 
 To collect data from NASA, you are required to have an API-key. The key allows you to make a call to their API's.
 
-<!-- replace the code in the /docs folder with your own, so you can showcase your work with GitHub Pages 🌍 -->
-
 <!-- Add a nice poster image here at the end of the week, showing off your shiny frontend 📸 -->
 
 <!-- Maybe a table of contents here? 📚 -->
@@ -291,7 +323,5 @@ To collect data from NASA, you are required to have an API-key. The key allows y
 <!-- ...but how does one use this project? What are its features 🤔 -->
 
 <!-- What external data source is featured in your project and what are its properties 🌠 -->
-
-<!-- Maybe a checklist of done stuff and stuff still on your wishlist? ✅ -->
 
 <!-- How about a license here? 📜 (or is it a licence?) 🤷 -->
