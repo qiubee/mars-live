@@ -1,3 +1,50 @@
-main {
-    color: #000;
+/* set margin & padding to default */
+body, ul, h1, h2, h3, p {
+    margin: 0;
+    padding: 0;
+}
+
+/* set decoration to default */
+ul {
+    list-style-type: none;
+}
+
+a {
+    text-decoration: none;
+}
+
+/* main */
+h1 {
+    text-align: center;
+    margin: 1.5em;
+}
+
+h1 a {
+    color: tomato;
+}
+
+article {
+    display: grid;
+    grid-template-columns: auto repeat(7, 13.5vw) auto;
+    grid-template-rows: 2.5em 40vh 2em;
+    margin: 1.5em auto;
+}
+
+article h2 {
+    grid-column: 2 / span 3;
+}
+
+article a:first-of-type {
+    grid-column-start: 2;
+}
+
+article a {
+    background-color: lightskyblue;
+    border: solid 0.1em blue;
+}
+
+article section {
+    background-color: lightskyblue;
+    margin: 1em;
+    text-align: center;
 }
