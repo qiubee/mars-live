@@ -18,7 +18,7 @@ export function createWeatherCard(weatherData) {
         const ul = addElementWithText(section, "ul");
 
         // temperature
-        addElementWithText(ul, "li", item.temp.average + "\xB0C");
+        item.temperature.average === "unknown" ? addElementWithText(ul, "li", item.temperature.average): addElementWithText(ul, "li", item.temperature.average + "\xB0C");
         // wind speed
         addElementWithText(ul, "li", item.wind.speed);
         // wind direction
