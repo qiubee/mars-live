@@ -6,11 +6,11 @@ export function createWeatherCard(weatherData) {
 
     // error text when weather data is unavailable
     if (weatherData === undefined) {
-        loading(false);
+        loading(false, article);
         addElementWithText(article, "p", "We aren't able to show weather information at the moment. Refresh the page to try again.");
         return;
     }
-    loading(false);
+    loading(false, article);
     weatherData.map(function (item) {
         // create section & append to article
         const section = addElementWithText(article, "section");
@@ -31,13 +31,13 @@ export function createWeatherCard(weatherData) {
 }
 
 export function createPhotoCollection(photoData) {
-    const section = document.querySelector("main");
+    const section = document.querySelector("main > section");
     
     // error text when photo data is unavailable
     if (photoData === undefined) {
-        loading(false);
+        loading(false, section);
         addElementWithText(section, "p", "We aren't able to show photos of Mars at the moment. Refresh the page to try again.");
         return;
     }
-    loading(false);
+    loading(false, section);
 }
