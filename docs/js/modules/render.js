@@ -9,7 +9,11 @@ export function createWeatherCard(weatherData) {
     
     weatherData.map(function (item) {
         // create section & append to article
-        const section = addElementWithText(article, "section");
+        const link = addElementWithText(article, "a");
+        link.setAttribute("href", `#${item.day.toLowerCase()}`);
+
+        // create section & append to article
+        const section = addElementWithText(link, "section");
 
         // add dayname as title to section
         addElementWithText(section, "h3", `${item.day} (${item.sol} Sol)`);
@@ -19,10 +23,6 @@ export function createWeatherCard(weatherData) {
 
         // temperature
         item.temperature.average === "unknown" ? addElementWithText(ul, "li", item.temperature.average): addElementWithText(ul, "li", item.temperature.average + "\xB0C");
-        // wind speed
-        addElementWithText(ul, "li", item.wind.speed);
-        // wind direction
-        addElementWithText(ul, "li", item.wind.direction);
     });
 }
 
@@ -40,4 +40,11 @@ function errorHandle(element, data, text) {
         loading(false, element);
         return addElementWithText(element, "p", text);
     }
+}
+
+export function showDetailWeatherInformation(weatherData) {
+    // wind speed
+    // addElementWithText(ul, "li", item.wind.speed);
+    // wind direction
+    // addElementWithText(ul, "li", item.wind.direction);
 }
