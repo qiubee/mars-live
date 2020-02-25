@@ -4,13 +4,9 @@ import { loading } from "./UI.js";
 export function createWeatherCard(weatherData) {
     const article = document.querySelector("main > article");
 
-    // error text when weather data is unavailable
-    if (weatherData === undefined) {
-        loading(false, article);
-        addElementWithText(article, "p", "We aren't able to show weather information at the moment. Refresh the page to try again.");
-        return;
-    }
-    loading(false, article);
+    // error message when photo data is unavailable
+    errorHandle(article, weatherData, "We aren't able to show weather information at the moment. Please refresh the page to try again.");
+    
     weatherData.map(function (item) {
         // create section & append to article
         const section = addElementWithText(article, "section");
@@ -32,12 +28,16 @@ export function createWeatherCard(weatherData) {
 
 export function createPhotoCollection(photoData) {
     const section = document.querySelector("main > section");
-    
-    // error text when photo data is unavailable
-    if (photoData === undefined) {
-        loading(false, section);
-        addElementWithText(section, "p", "We aren't able to show photos of Mars at the moment. Refresh the page to try again.");
-        return;
+
+    // error message when photo data is unavailable
+    errorHandle(section, photoData, "We aren't able to show photos of Mars at the moment. Please refresh the page to try again.");
+}
+
+function errorHandle(element, data, text) {
+    if (data) {
+        return loading(false, element);
+    } else {
+        loading(false, element);
+        return addElementWithText(element, "p", text);
     }
-    loading(false, section);
 }
