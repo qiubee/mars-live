@@ -1,4 +1,5 @@
 import { getMarsPhotoData, getMarsWeatherData } from "./api.js";
+import { addToSessionStorage, checkInSessionStorage, getFromSessionStorage} from "./storage.js";
 
 async function cleanWeatherData() {
     const rawWeatherData = await getMarsWeatherData();
@@ -59,7 +60,7 @@ function transformWeatherData(data) {
         const year = Number(item.First_UTC.substring(0, 4));
 
         // get name of day & month
-        const day = getFullNameOf(item.First_UTC).toLowerCase();
+        const day = getFullNameOf(item.First_UTC);
         const month = getFullNameOf(item.First_UTC, false, true).toLowerCase();
 
         // set sol day
@@ -125,5 +126,13 @@ function getFullNameOf(date, day = true, month = false, language = "en-GB") {
     return new Intl.DateTimeFormat(language, options).format(new Date(date));
 }
 
-export async function weatherData(language) {return await cleanWeatherData(language);}
+export async function weatherData() {
+    if (checkInSessionStorage("weatherdata") === false) {
+    const weatherData = await cleanWeatherData();
+    addToSessionStorage("weatherdata", weatherData);
+    return weatherData;
+    } else if ((checkInSessionStorage("weatherdata") === true)) {
+        return getFromSessionStorage("weatherdata");
+    }
+}
 export async function photoData() {return await cleanPhotoData();}
