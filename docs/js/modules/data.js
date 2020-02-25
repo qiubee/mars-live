@@ -5,10 +5,12 @@ async function cleanWeatherData() {
     if (rawWeatherData === undefined) {
         return;
     }
-    console.log("Raw weather data:", rawWeatherData);
-    const cleanWeatherData = filterWeatherData(rawWeatherData);
-    console.log("Filtered weather data:", cleanWeatherData);
-    return cleanWeatherData;
+    // console.log("Raw weather data:", rawWeatherData);
+    const filteredWeatherData = filterWeatherData(rawWeatherData);
+    // console.log("Filtered weather data:", filteredWeatherData);
+    const transformedWeatherData = transformWeatherData(filteredWeatherData);
+    // console.log("Transformed weather data:", transformedWeatherData);
+    return transformedWeatherData;
 }
 
 async function cleanPhotoData() {
@@ -22,73 +24,77 @@ async function cleanPhotoData() {
     // return cleanPhotoData;
 }
 
-function filterWeatherData(data, language = "en") {
-    let days = [];
-    const lang = language;
-    // loop over array with key of days
-    data.sol_keys.map(function (key) {
-        // Get all keys of objects
+
+function filterWeatherData(data) {
+    let filteredData = [];
+    // loop over array with sol days
+    data.sol_keys.map(function (sol) {
+        // loop over all keys of data object
         Object.keys(data).map(function (item) {
             // check for the same key
-            if (key === item) {
-                // bind the object with the same key to variable
-                const obj = data[key];
-
-                // create temperatures
-                const minTemp = obj.AT === undefined ? "unknown" : Math.round(obj.AT.mn);
-                const maxTemp = obj.AT === undefined ? "unknown" : Math.round(obj.AT.mx);
-                const averageTemp = obj.AT === undefined ? "unknown" : Math.round(obj.AT.av);
-
-                // set wind speed
-                const windSpeed = obj.HWS === undefined ? "unknown" : Number(Number(obj.HWS.av).toFixed(1));
-                let windDirection = obj.HWS === undefined ? "unknown" : obj.WD.most_common.compass_point;
-
-                // get date & year
-                const date = obj.First_UTC.replace(/\T(.*)/, "");
-                const year = Number(obj.First_UTC.substring(0, 4));
-
-                // get name of day & month in English
-                let day = getFullNameOf(obj.First_UTC).toLowerCase();
-                let month = getFullNameOf(obj.First_UTC, false, true).toLowerCase();
-
-                // get sol day
-                const sol = Number(key);
-                // get season name
-                let season = obj.Season;
-
-                // translate to set language
-                switch (lang) {
-                    case "nl":
-                        season = translateSeasonNameToDutch(season);
-                        windDirection = windDirection.replace(/S/g, "Z").replace(/E/g, "O");
-                        day = getFullNameOf(obj.First_UTC, true, false, "nl-NL");
-                        month = getFullNameOf(obj.First_UTC, false, true, "nl-NL");
-                        break;
-                }
-
-                // add relevant data to empty array
-                days.push({
-                    date: date,
-                    year: year,
-                    month: month,
-                    day: day,
-                    temp: {
-                        min: minTemp,
-                        max: maxTemp,
-                        average: averageTemp
-                    },
-                    wind: {
-                        speed: windSpeed,
-                        direction: windDirection
-                    },
-                    season: season,
-                    sol: sol,
-                    lang: lang
-                });
+            if (sol === item) {
+                // set sol day in item
+                data[sol].sol = sol;
+                // push to empty array
+                filteredData.push(data[sol]);
             }
         });
     });
-    return days;
+    return filteredData;
+}
+
+function transformWeatherData(data) {
+    return data.map(function (item) {
+        // round temperatures
+        const minTemp = item.AT === undefined ? "unknown" : Math.round(item.AT.mn);
+        const maxTemp = item.AT === undefined ? "unknown" : Math.round(item.AT.mx);
+        const averageTemp = item.AT === undefined ? "unknown" : Math.round(item.AT.av);
+
+        // set wind speed
+        const windSpeed = item.HWS === undefined ? "unknown" : Number(Number(item.HWS.av).toFixed(1));
+        const windDirection = item.HWS === undefined ? "unknown" : item.WD.most_common.compass_point;
+
+        // get date & year
+        const date = item.First_UTC.replace(/\T(.*)/, "");
+        const year = Number(item.First_UTC.substring(0, 4));
+
+        // get name of day & month
+        const day = getFullNameOf(item.First_UTC).toLowerCase();
+        const month = getFullNameOf(item.First_UTC, false, true).toLowerCase();
+
+        // set sol day
+        const sol = Number(item.sol);
+
+        return {
+            date: date,
+            year: year,
+            month: month,
+            day: day,
+            temperature: {
+                min: minTemp,
+                max: maxTemp,
+                average: averageTemp
+            },
+            wind: {
+                speed: windSpeed,
+                direction: windDirection
+            },
+            season: item.Season,
+            sol: sol,
+            lang: "en"
+        };
+    });
+}
+
+function switchLanguage(data, language) {
+    switch (language) {
+        case "nl":
+            season = translateSeasonNameToDutch(season);
+            windDirection = windDirection.replace(/S/g, "Z").replace(/E/g, "O");
+            day = getFullNameOf(obj.First_UTC, true, false, "nl-NL");
+            month = getFullNameOf(obj.First_UTC, false, true, "nl-NL");
+            break;
+    }
 }
 
 function translateSeasonNameToDutch(season) {
@@ -98,6 +104,8 @@ function translateSeasonNameToDutch(season) {
         case "spring":
             return "lente";
         case "autumn":
+            return "herfst";
+        case "fall":
             return "herfst";
     }
 }
@@ -117,5 +125,5 @@ function getFullNameOf(date, day = true, month = false, language = "en-GB") {
     return new Intl.DateTimeFormat(language, options).format(new Date(date));
 }
 
-export async function weatherData() {return await cleanWeatherData(getMarsWeatherData());}
-export async function photoData() {return await cleanPhotoData(getMarsPhotoData());}
+export async function weatherData(language) {return await cleanWeatherData(language);}
+export async function photoData() {return await cleanPhotoData();}
