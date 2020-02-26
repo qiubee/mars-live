@@ -1,5 +1,3 @@
-// localStorage source: https://www.taniarascia.com/how-to-use-local-storage-with-javascript/
-
 export function addToSessionStorage(name, content) {
     content = JSON.stringify(content);
     sessionStorage.setItem(name, content);
