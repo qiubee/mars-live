@@ -1,4 +1,5 @@
-import { addElementWithText } from "../utils/addAndDeleteElement.js";
+import { addElementWithText } from "../utils/element.js";
+import { getNameofDay } from "../utils/date.js";
 import { loading } from "./UI.js";
 
 export function createWeatherCard(weatherData) {
@@ -6,8 +7,9 @@ export function createWeatherCard(weatherData) {
 
     // error message when photo data is unavailable
     errorHandle(article, weatherData, "We aren't able to show weather information at the moment. Please refresh the page to try again.");
-    
-    weatherData.map(function (item) {
+
+    // reverse order of looping items (source: https://stackoverflow.com/questions/36415904/is-there-a-way-to-use-map-on-an-array-in-reverse-order-with-javascript)
+    weatherData.slice(0).reverse().map(function (item) {
         // create section & append to article
         const link = addElementWithText(article, "a");
         link.setAttribute("href", `#${item.day.toLowerCase()}`);
@@ -15,8 +17,12 @@ export function createWeatherCard(weatherData) {
         // create section & append to article
         const section = addElementWithText(link, "section");
 
-        // add dayname as title to section
-        addElementWithText(section, "h3", `${item.day} (${item.sol} Sol)`);
+        // add header to section
+        const h3 = addElementWithText(section, "h3");
+
+        // add name of day as span elements to header
+        item.day === getNameofDay(-1) ? addElementWithText(h3, "span", "Yesterday") : addElementWithText(h3, "span", `${item.day} `);
+        addElementWithText(h3, "span", `(${item.sol} Sol)`);
 
         // add list with weather data
         const ul = addElementWithText(section, "ul");
@@ -24,6 +30,7 @@ export function createWeatherCard(weatherData) {
         // temperature
         item.temperature.average === "unknown" ? addElementWithText(ul, "li", item.temperature.average): addElementWithText(ul, "li", item.temperature.average + "\xB0C");
     });
+
 }
 
 export function createPhotoCollection(photoData) {
@@ -42,7 +49,7 @@ function errorHandle(element, data, text) {
     }
 }
 
-export function showDetailWeatherInformation(weatherData) {
+export function showDetailedWeather(weatherData) {
     // wind speed
     // addElementWithText(ul, "li", item.wind.speed);
     // wind direction
