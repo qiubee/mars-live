@@ -1,4 +1,4 @@
-import getDate from "../utils/getDate.js";
+import { getDate } from "../utils/date.js";
 const apiKey = "B0XkeeKZ8AD1ZEIYa7o26ya0bBDkvsXV3fn94GE2";
 
     const mars = {

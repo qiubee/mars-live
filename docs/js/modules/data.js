@@ -1,5 +1,5 @@
 import { getMarsPhotoData, getMarsWeatherData } from "./api.js";
-import { addToSessionStorage, checkInSessionStorage, getFromSessionStorage} from "./storage.js";
+import { addToSessionStorage, checkInSessionStorage, getFromSessionStorage} from "../utils/storage.js";
 
 async function cleanWeatherData() {
     const rawWeatherData = await getMarsWeatherData();
