@@ -24,27 +24,23 @@ export function createWeatherCard(weatherdata) {
         item.day === getNameofDay(-1) ? addElementWithText(h3, "span", "Yesterday") : addElementWithText(h3, "span", `${item.day} `);
         addElementWithText(h3, "span", `(${item.sol} Sol)`);
 
-        // add list with weather data
-        const ul = addElementWithText(section, "ul");
-
-        // temperature
-        item.temperature.average === "unknown" ? addElementWithText(ul, "li", item.temperature.average): addElementWithText(ul, "li", item.temperature.average + "\xB0C");
+        // add temperature
+        item.temperature.average === "unknown" ? addElementWithText(section, "p", item.temperature.average): addElementWithText(section, "p", item.temperature.average + "\xB0C");
     });
-
 }
 
 export function createPhotoCollection(photodata) {
     const section = document.querySelector("main > section");
 
     // error message when photo data is unavailable
-    errorHandle(section, photodata, "We aren't able to show photos of Mars at the moment. Please refresh the page to try again.");
+    errorHandle(section, photodata, "We aren't able to show photos of Mars at the moment. Please refresh the page to try again."); // <-- bug #1
 }
 
 function errorHandle(element, data, text) {
     if (data) {
         return loading(false, element);
     } else {
-        loading(false, element);
+        // loading(false, element); // <-- bug #1 ErrorHandling: text won't display (Node not found)
         return addElementWithText(element, "p", text);
     }
 }
@@ -57,4 +53,7 @@ export function showDetailedWeather(day, weatherdata) {
     // addElementWithText(ul, "li", item.wind.speed);
     // wind direction
     // addElementWithText(ul, "li", item.wind.direction);
+    // Convert windspeed to Beaufort scale
+    // function convertToBeaufort(windspeed) {
+    // }
 }
