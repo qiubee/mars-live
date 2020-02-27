@@ -1,2 +1,2 @@
-import { route }from "./modules/router.js";
+import { route } from "./modules/router.js";
 route();
