@@ -2,12 +2,11 @@ import { photoData, weatherData } from "./data.js";
 import { createWeatherCard, createPhotoCollection, showDetailedWeather } from "./render.js";
 import { loading } from "./UI.js";
 
-export function route() {
-    overview();
+export async function route() {
+    await overview();
     routie({
         ":day": async function(day) {
-            console.log(document.querySelectorAll("a"), document.querySelector(`a[href=\"#${day}\"]`));
-            loading(true, document.getElementById(`${day}`));
+            loading(true, document.querySelector(`a[href="#${day}"]`));
             const marsWeather = await weatherData();
             showDetailedWeather(day, marsWeather);
         },
