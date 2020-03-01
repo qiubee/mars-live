@@ -6,12 +6,24 @@ export function addElementWithText(element, newElement, text) {
     }
 }
 
-export function deleteElement(parent, child, number = 1) {
+export function deleteElement(element) {
+    return element.parentNode.removeChild(element);
+}
+
+export function deleteChildElements(parent, child, itemNumber = undefined) {
     const elements = Array.from(parent.children).filter(function (node) {
         return node.nodeName.toLowerCase() === child;
     });
-    const element = elements[number -1];
-    return parent.removeChild(element);
+    if (itemNumber !== undefined && itemNumber > 0) {
+        const element = elements[itemNumber -1];
+        return parent.removeChild(element);
+    } else {
+        return elements.map(function (node) {
+            return parent.removeChild(node);
+        });
+    }
+    
+    
 }
 
 function createElement(element) {
