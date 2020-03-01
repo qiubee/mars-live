@@ -1,5 +1,5 @@
 import { addElementWithText } from "../utils/element.js";
-import { getNameofDay } from "../utils/date.js";
+import { getDate } from "../utils/date.js";
 import { loading } from "./UI.js";
 
 export function createWeatherCard(weatherdata) {
@@ -21,7 +21,7 @@ export function createWeatherCard(weatherdata) {
         const h3 = addElementWithText(section, "h3");
 
         // add name of day as span elements to header
-        item.day === getNameofDay(-1) ? addElementWithText(h3, "span", "Yesterday") : addElementWithText(h3, "span", `${item.day} `);
+        item.date === getDate(-1) ? addElementWithText(h3, "span", "Yesterday") : addElementWithText(h3, "span", `${item.day} `);
         addElementWithText(h3, "span", `(${item.sol} Sol)`);
 
         // add temperature
