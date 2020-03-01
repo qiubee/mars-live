@@ -6,8 +6,11 @@ export function addElementWithText(element, newElement, text) {
     }
 }
 
-export function deleteElement(parent, child) {
-    const element = document.querySelector(parent.tagName.toLowerCase() + " " + child);
+export function deleteElement(parent, child, number = 1) {
+    const elements = Array.from(parent.children).filter(function (node) {
+        return node.nodeName.toLowerCase() === child;
+    });
+    const element = elements[number -1];
     return parent.removeChild(element);
 }
 
