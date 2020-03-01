@@ -33,14 +33,14 @@ export function createPhotoCollection(photodata) {
     const section = document.querySelector("main > section");
 
     // error message when photo data is unavailable
-    errorHandle(section, photodata, "We aren't able to show photos of Mars at the moment. Please refresh the page to try again."); // <-- bug #1
+    errorHandle(section, photodata, "We aren't able to show photos of Mars at the moment. Please refresh the page to try again.");
 }
 
 function errorHandle(element, data, text) {
     if (data) {
         return loading(false, element);
     } else {
-        // loading(false, element); // <-- bug #1 ErrorHandling: text won't display (Node not found)
+        loading(false, element);
         return addElementWithText(element, "p", text);
     }
 }
