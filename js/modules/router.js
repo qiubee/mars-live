@@ -6,8 +6,6 @@ export async function route() {
     await overview();
     routie({
         ":day": async function(day) {
-            const node = document.querySelector(`a[href="#${day}"]`);
-            loading(true, node, "loading details...");
             const marsWeather = await weatherData();
             showDetailedWeather(day, marsWeather);
         },
