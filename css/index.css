@@ -64,6 +64,15 @@ article {
     margin: 1.5em auto;
 }
 
+article.detail {
+    grid-template-columns: auto 1em 12vw 1em repeat(6, 12vw 1em) auto;
+    grid-gap: 0;
+}
+
+article.detail h2 {
+    grid-column: 3 / span 6;
+}
+
 article h2 {
     grid-column: 2 / span 3;
 }
@@ -74,6 +83,12 @@ article > p {
 
 article a:first-of-type {
     grid-column-start: 2;
+}
+
+article a:first-of-type.focus {
+    grid-column: 3;
+    border-radius: 0.75em 0 0 0.75em; 
+    border: solid 0 rgba(17, 153, 105, 0.5);
 }
 
 article a {
@@ -87,7 +102,8 @@ article a {
     filter:  drop-shadow(0 0 0.2em rgba(17, 153, 105, 0.3));
     color: var(--bg-color);
     border-radius: 0.75em;
-    transition: translate ease-out 0.5s, filter ease 0.7s;
+    transition: translate ease-out 0.5s, filter ease 0.7s, border-radius ease-in-out 0.5s,
+        border ease-in-out 1s;
 }
 
 article a:hover {
@@ -111,26 +127,50 @@ article h3 span:last-of-type {
     font-size: 75%;
 }
 
-article section p {
+a section p {
     font-size: 2em;
     margin: 18% 0;
     translate: -0.1em;
 }
 
+article > section {
+    background-color: var(--sec-color);
+    background-image: url(https://www.nasa.gov/sites/default/files/styles/image_card_4x3_ratio/public/thumbnails/image/pia22052.jpg);
+    background-size: 80vh;
+    background-blend-mode: exclusion;
+    background-position-y: -12vw;
+    background-repeat: no-repeat;
+    border-radius: 0 0.75em 0.75em 0;
+    grid-column: 4 / span 4;
+    color: var(--bg-color);
+    animation: show-details 1.5s ease;
+}
+
+article > section h3 {
+    font-size: 1.5em;
+    margin: 1.25em auto auto 1em;
+    color: var(--third-color);
+}
+
+article > section p {
+    font-size: 1em;
+}
+
 main > section {
     display: grid;
-    grid-template-columns: auto 84vw auto;
+    grid-template-columns: auto repeat(7, 12vw) auto;
     grid-column-gap: 1em;
-    grid-template-rows: 2.5em 15em 2.5em;
+    grid-template-rows: 2.5em 25vh 2em;
     margin: 5em auto;
 }
 
 main > section h2 {
-    grid-column: 2 / span 3;
+    grid-column: 2 / span 6;
 }
 
 main > section p {
-    grid-column: 2;
+    grid-column: 2 / span 6;
+    grid-row: 2;
 }
 
 .hide {
@@ -144,14 +184,6 @@ main > section p {
 
 .in-active {
     pointer-events: none;
-}
-
-.focus:not([href^="#f"]) {
-    grid-column: 2;
-    grid-row: 2;
-}
-
-.focus {
     translate: none;
 }
 
@@ -160,5 +192,15 @@ main > section p {
     h1 {
     font-size: 2.5em;
     margin: 1.5em;
+    }
+}
+
+/* -- Animations -- */
+@keyframes show-details {
+    from {
+        width: 0;
+    }
+    to {
+        width: 100%;
     }
 }
