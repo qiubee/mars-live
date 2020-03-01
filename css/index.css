@@ -52,6 +52,20 @@ h1 {
     text-align: center;
 }
 
+h1:before {
+    content: "the current situation on mars";
+    position: absolute;
+    z-index: -1;
+    margin: 0.05em 0.1em;
+    color: var(--third-color);
+    transition: color 0.25s ease, opacity 0.25s ease;
+}
+
+h1:hover:before {
+    color: var(--main-color);
+    opacity: 0.5;
+}
+
 h1 a {
     color: var(--sec-color);
 }
