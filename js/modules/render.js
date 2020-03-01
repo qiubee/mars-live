@@ -36,12 +36,28 @@ export function createPhotoCollection(photodata) {
     errorHandle(section, photodata, "We aren't able to show photos of Mars at the moment. Please refresh the page to try again.");
 }
 
-export function showDetailedWeather(day, weatherdata) {
+export async function showDetailedWeather(day, weatherdata) {
+    // replace day with week in header
     const title = document.querySelector("main > article > h2");
     title.textContent = title.textContent.replace("week", day);
 
+    // hide cards except selected one
     const cards = document.querySelectorAll("a[href$=\"day\"]");
-    hideWeatherCards(cards, day);
+    await hideWeatherCards(cards, day);
+    
+    // add class *detail* to article
+    const article = document.querySelector("main > article");
+    article.classList.toggle("detail");
+
+    // create section & append to article
+    const section = addElementWithText(article, "section");
+
+    // add header to section
+    const h3 = addElementWithText(section, "h3", "Details");
+
+    // activate loader
+    loading(true, section, "Loading details");
+
     // wind speed
     // addElementWithText(ul, "li", item.wind.speed);
     // wind direction
