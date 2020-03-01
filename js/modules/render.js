@@ -1,6 +1,6 @@
 import { addElementWithText } from "../utils/element.js";
 import { getDate } from "../utils/date.js";
-import { loading } from "./UI.js";
+import { loading, hideWeatherCards } from "./UI.js";
 
 export function createWeatherCard(weatherdata) {
     const article = document.querySelector("main > article");
@@ -36,19 +36,12 @@ export function createPhotoCollection(photodata) {
     errorHandle(section, photodata, "We aren't able to show photos of Mars at the moment. Please refresh the page to try again.");
 }
 
-function errorHandle(element, data, text) {
-    if (data) {
-        return loading(false, element);
-    } else {
-        loading(false, element);
-        return addElementWithText(element, "p", text);
-    }
-}
-
 export function showDetailedWeather(day, weatherdata) {
-    if (/^(^mon|tues|wednes|thurs|fri|satur|sun)day$/gim.test(day)) {
+    const title = document.querySelector("main > article > h2");
+    title.textContent = title.textContent.replace("week", day);
 
-    }
+    const cards = document.querySelectorAll("a[href$=\"day\"]");
+    hideWeatherCards(cards, day);
     // wind speed
     // addElementWithText(ul, "li", item.wind.speed);
     // wind direction
@@ -56,4 +49,13 @@ export function showDetailedWeather(day, weatherdata) {
     // Convert windspeed to Beaufort scale
     // function convertToBeaufort(windspeed) {
     // }
+}
+
+function errorHandle(element, data, text) {
+    if (data) {
+        return loading(false, element);
+    } else {
+        loading(false, element);
+        return addElementWithText(element, "p", text);
+    }
 }
