@@ -79,8 +79,9 @@ article a:first-of-type {
 article a {
     background-color: var(--main-color);
     background-image: url(https://www.nasa.gov/sites/default/files/styles/image_card_4x3_ratio/public/thumbnails/image/pia22052.jpg);
-    background-size: 175%;
-    background-position-y: -4em;
+    background-size: 40vh;
+    background-repeat: no-repeat;
+    background-position-y: -5vh;
     border: solid 0.15em rgba(17, 153, 105, 0.5);
     text-align: center;
     filter:  drop-shadow(0 0 0.2em rgba(17, 153, 105, 0.3));
