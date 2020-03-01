@@ -133,6 +133,28 @@ main > section p {
     grid-column: 2;
 }
 
+.hide {
+    scale: 0 0;
+    transition: scale 1s ease-in;
+}
+
+.hidden {
+   visibility: hidden;
+}
+
+.in-active {
+    pointer-events: none;
+}
+
+.focus:not([href^="#f"]) {
+    grid-column: 2;
+    grid-row: 2;
+}
+
+.focus {
+    translate: none;
+}
+
 /* -- Media queries -- */
 @media (min-width: 60em) {
     h1 {
