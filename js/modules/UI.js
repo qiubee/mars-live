@@ -1,9 +1,9 @@
-import { addElementWithText, deleteChildElements } from "../utils/element.js";
+import { addElementWithText, deleteChildElements, deleteElement } from "../utils/element.js";
 export function loading(state, element, loadingMessage = "Loading...") {
     state ? addElementWithText(element, "p", loadingMessage) : deleteChildElements(element, "p", element.lastElementChild);
 }
 
-export function hideWeatherCards(elements, day) {
+export async function hideWeatherCards(elements, day) {
     const nodes = Array.from(elements);
     const placeInList = nodes.map(function (node, i) {
         if (node.hash === `#${day}`) {
@@ -13,20 +13,25 @@ export function hideWeatherCards(elements, day) {
         return item !== undefined;
     })[0];
 
-    nodes.map(function (node, i) {
-        node.classList.toggle("in-active");
-        if (i !== placeInList) {
-            setTimeout(function () {
-                node.classList.toggle("hide");
+    return new Promise(function (res, rej) {
+        nodes.map(function (node, i) {
+            node.classList.toggle("in-active");
+            if (i !== placeInList) {
                 setTimeout(function () {
                     node.classList.toggle("hide");
-                    node.classList.toggle("hidden");
-                }, 5000);
-            }, 250 * i);
-        } else {
-            setTimeout(function () {
-                node.classList.toggle("focus");
-            }, 2500);
-        }
+                    setTimeout(function () {
+                        node.classList.toggle("hide");
+                    }, 2000);
+                    setTimeout(function () {
+                        deleteElement(node);
+                    }, 2000);
+                }, 150 * i);
+            } else {
+                setTimeout(function () {
+                    node.classList.toggle("focus");
+                    res();
+                }, 3000);
+            }
+        });
     });
 }
