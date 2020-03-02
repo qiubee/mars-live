@@ -6,9 +6,24 @@ export function addElementWithText(element, newElement, text) {
     }
 }
 
-export function deleteElement(parent, child) {
-    const element = document.querySelector(parent.tagName.toLowerCase() + " " + child);
-    return parent.removeChild(element);
+export function deleteElement(element) {
+    return element.parentNode.removeChild(element);
+}
+
+export function deleteChildElements(parent, child, itemNumber = undefined) {
+    const elements = Array.from(parent.children).filter(function (node) {
+        return node.nodeName.toLowerCase() === child;
+    });
+    if (itemNumber !== undefined && itemNumber > 0) {
+        const element = elements[itemNumber -1];
+        return parent.removeChild(element);
+    } else {
+        return elements.map(function (node) {
+            return parent.removeChild(node);
+        });
+    }
+    
+    
 }
 
 function createElement(element) {
