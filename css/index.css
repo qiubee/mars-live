@@ -105,6 +105,21 @@ article a:first-of-type.focus {
     border: solid 0 rgba(17, 153, 105, 0.5);
 }
 
+article a:first-of-type.focus p {
+    opacity: 0%;
+    transition: opacity 1s ease;
+}
+
+article a:first-of-type.focus p {
+    opacity: 0%;
+    transition: opacity 1s ease;
+}
+
+article a:first-of-type.focus h3 {
+    translate: 0 1.75em;
+    transition: translate 1s ease-in-out;
+}
+
 article a {
     background-color: var(--main-color);
     background-image: url(https://www.nasa.gov/sites/default/files/styles/image_card_4x3_ratio/public/thumbnails/image/pia22052.jpg);
@@ -141,10 +156,16 @@ article h3 span:last-of-type {
     font-size: 75%;
 }
 
-a section p {
+article section p {
     font-size: 2em;
     margin: 18% 0;
     translate: -0.1em;
+}
+
+a > p {
+    font-family: "Blogger";
+    margin-top: 2em;
+    font-size: 1.6em;
 }
 
 article > section {
@@ -157,17 +178,34 @@ article > section {
     border-radius: 0 0.75em 0.75em 0;
     grid-column: 4 / span 4;
     color: var(--bg-color);
+    width: 75%;
     animation: show-details 1.5s ease;
+}
+
+article > section > div {
+    display: flex;
+    margin-left: 1.5em;
+    animation: reveal 1.75s ease;
+}
+
+article > section div div:first-of-type {
+    margin-right: 3em;
 }
 
 article > section h3 {
     font-size: 1.5em;
-    margin: 1.25em auto auto 1em;
+    margin: 1.25em auto -0.25em 1em;
     color: var(--third-color);
+    animation: reveal 1s ease;
 }
 
-article > section p {
-    font-size: 1em;
+article > section h4 {
+    font-size: 1.15em;
+    animation: reveal 1s ease;
+}
+
+article > section li {
+    margin-bottom: 0.2em;
 }
 
 main > section {
@@ -215,6 +253,16 @@ main > section p {
         width: 0;
     }
     to {
-        width: 100%;
+        width: 75%;
+    }
+}
+
+@keyframes reveal {
+    from {
+        opacity: 0;
+    } 50% {
+        opacity: 0;
+    } to {
+        opacity: 1;
     }
 }
