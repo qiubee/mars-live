@@ -1,6 +1,7 @@
-import { addElementWithText } from "../utils/element.js";
+import { addElementWithText, deleteElement } from "../utils/element.js";
 import { getDate } from "../utils/date.js";
 import { loading, hideWeatherCards } from "./UI.js";
+import { convertToBeaufort } from "../utils/beaufort.js";
 
 export function createWeatherCard(weatherdata) {
     const article = document.querySelector("main > article");
@@ -41,6 +42,12 @@ export async function showDetailedWeather(day, weatherdata) {
     const title = document.querySelector("main > article > h2");
     title.textContent = title.textContent.replace("week", day);
 
+    // activate loader
+    const selected = document.querySelector(`a[href$="#${day}"]`);
+    const p = document.querySelector(`a[href$="#${day}"] p`);
+    deleteElement(p);
+    loading(true, selected, "Loading details...");
+
     // hide cards except selected one
     const cards = document.querySelectorAll("a[href$=\"day\"]");
     await hideWeatherCards(cards, day);
@@ -53,18 +60,32 @@ export async function showDetailedWeather(day, weatherdata) {
     const section = addElementWithText(article, "section");
 
     // add header to section
-    const h3 = addElementWithText(section, "h3", "Details");
+    addElementWithText(section, "h3", "Details");
 
-    // activate loader
-    loading(true, section, "Loading details");
+    // filter weatherdata of selected day
+    const details = weatherdata.filter(function  (item) {
+        return item.day.toLowerCase() === day;
+    });
 
-    // wind speed
-    // addElementWithText(ul, "li", item.wind.speed);
-    // wind direction
-    // addElementWithText(ul, "li", item.wind.direction);
-    // Convert windspeed to Beaufort scale
-    // function convertToBeaufort(windspeed) {
-    // }
+    details.map(function (item) {
+        const div = addElementWithText(section, "div");
+        // add temperatures
+        const tempDiv = addElementWithText(div, "div");
+        addElementWithText(tempDiv, "h4", "Temperature");
+        const temperatureList = addElementWithText(tempDiv, "ul");
+        addElementWithText(temperatureList, "li", "Maximum: " + item.temperature.max + "\xB0C");
+        addElementWithText(temperatureList, "li", "Average: " + item.temperature.average + "\xB0C");
+        addElementWithText(temperatureList, "li", "Mininum: " + item.temperature.min + "\xB0C");
+
+        // add windspeed & direction
+        const windDiv = addElementWithText(div, "div");
+        addElementWithText(windDiv, "h4", "Wind");
+        const windList = addElementWithText(windDiv, "ul");
+        addElementWithText(windList, "li", "Speed: " + convertToBeaufort(item.wind.speed) + " Bft");
+        addElementWithText(windList, "li", "Direction: " + item.wind.direction);
+    });
+
+    loading(false, section);
 }
 
 function errorHandle(element, data, text) {
