@@ -1,6 +1,6 @@
 # Live on Mars
 
-![Preview image of website showing weather forecast and images of Mars]()
+![Preview image of website showing weather forecast and images of Mars](img/website.png)
 
 ## Description
 
