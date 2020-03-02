@@ -164,8 +164,8 @@ article section p {
 
 a > p {
     font-family: "Blogger";
-    margin-top: 2em;
-    font-size: 1.6em;
+    margin-top: 2.5em;
+    font-size: 1.25em;
 }
 
 article > section {
@@ -201,7 +201,7 @@ article > section h3 {
 
 article > section h4 {
     font-size: 1.15em;
-    margin-top: 1.5em;
+    margin-top: 3vh;
     margin-bottom: 0.5em;
     animation: reveal 1s ease;
 }
