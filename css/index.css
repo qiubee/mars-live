@@ -228,7 +228,7 @@ main > section p {
 }
 
 .hide {
-    transform: scale(0 0);
+    transform: scale(0, 0);
     transition: transform 1s ease-in;
 }
 
