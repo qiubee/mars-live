@@ -228,7 +228,7 @@ main > section p {
 }
 
 .hide {
-    transform: scale(0, 0);
+    transform: scale(0);
     transition: transform 1s ease-in;
 }
 
@@ -238,7 +238,7 @@ main > section p {
 
 .in-active {
     pointer-events: none;
-    transform: none;
+    transform: scale(none);
 }
 
 /* -- Media queries -- */
