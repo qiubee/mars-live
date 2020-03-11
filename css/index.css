@@ -116,8 +116,8 @@ article a:first-of-type.focus p {
 }
 
 article a:first-of-type.focus h3 {
-    translate: 0 1.75em;
-    transition: translate 1s ease-in-out;
+    transform: translate(0, 1.75em);
+    transition: transform 1s ease-in-out;
 }
 
 article a {
@@ -131,12 +131,12 @@ article a {
     filter:  drop-shadow(0 0 0.2em rgba(17, 153, 105, 0.3));
     color: var(--bg-color);
     border-radius: 0.75em;
-    transition: translate ease-out 0.5s, filter ease 0.7s, border-radius ease-in-out 0.5s,
+    transition: transform ease-out 0.5s, filter ease 0.7s, border-radius ease-in-out 0.5s,
         border ease-in-out 1s;
 }
 
 article a:hover {
-    translate: 0 0.75em;
+    transform: translate(0, 0.75em);
     filter: drop-shadow(0 -0.25em 0.4em rgba(17, 153, 105, 0.7));
 }
 
@@ -159,7 +159,7 @@ article h3 span:last-of-type {
 article section p {
     font-size: 2em;
     margin: 18% 0;
-    translate: -0.1em;
+    transform: translate(-0.1em);
 }
 
 a > p {
@@ -238,7 +238,7 @@ main > section p {
 
 .in-active {
     pointer-events: none;
-    translate: none;
+    transform: none;
 }
 
 /* -- Media queries -- */
