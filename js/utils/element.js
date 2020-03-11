@@ -22,8 +22,6 @@ export function deleteChildElements(parent, child, itemNumber = undefined) {
             return parent.removeChild(node);
         });
     }
-    
-    
 }
 
 function createElement(element) {

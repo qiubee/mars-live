@@ -228,8 +228,8 @@ main > section p {
 }
 
 .hide {
-    scale: 0 0;
-    transition: scale 1s ease-in;
+    transform: scale(0 0);
+    transition: transform 1s ease-in;
 }
 
 .hidden {
