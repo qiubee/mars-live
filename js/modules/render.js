@@ -75,7 +75,7 @@ export async function showDetailedWeather(day, weatherdata) {
         const temperatureList = addElementWithText(tempDiv, "ul");
         addElementWithText(temperatureList, "li", "Maximum: " + item.temperature.max + "\xB0C");
         addElementWithText(temperatureList, "li", "Average: " + item.temperature.average + "\xB0C");
-        addElementWithText(temperatureList, "li", "Mininum: " + item.temperature.min + "\xB0C");
+        addElementWithText(temperatureList, "li", "Minimum: " + item.temperature.min + "\xB0C");
 
         // add windspeed & direction
         const windDiv = addElementWithText(div, "div");
